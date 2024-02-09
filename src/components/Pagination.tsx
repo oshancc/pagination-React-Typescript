@@ -1,13 +1,14 @@
 import React from 'react';
 
-type PaginteProp = {
+type PaginateProp = {
   postsPerPage: number;
   totalPosts: number;
-  paginate:(number:number) => void;
-}
+  setCurrentPage: (number: number) => void;
+  currentPage: number;
+};
 
-const Pagination = ({ postsPerPage, totalPosts, paginate }:PaginteProp) => {
-  const pageNumbers:number[] = [];
+const Pagination = ({ postsPerPage, totalPosts, setCurrentPage, currentPage }: PaginateProp) => {
+  const pageNumbers: number[] = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
@@ -16,16 +17,19 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }:PaginteProp) => {
   return (
     <nav>
       <ul className='pagination'>
-        {pageNumbers.map(number => (
+        {pageNumbers.map((number) => (
           <li key={number} className='page-item'>
-            <a onClick={() => paginate(number)} href='!#' className='page-link'>
+            <a
+              onClick={() => setCurrentPage(number)}
+              href='!#'
+              className={currentPage === number ? 'page-link bg-primary text-white' : 'page-link'}
+            >
               {number}
             </a>
           </li>
         ))}
       </ul>
-      <nav aria-label="Page navigation example">
-</nav>
+      <nav aria-label='Page navigation example'></nav>
     </nav>
   );
 };
