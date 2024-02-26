@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Posts from "./components/Posts";
-import Pagination from "./components/Pagination";
-import axios from "axios";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import Posts from './components/Posts';
+import Pagination from './components/Pagination';
+import axios from 'axios';
+import './App.css';
 
 type PostData = {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-  
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
 };
 
 const App = () => {
@@ -21,9 +20,7 @@ const App = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      const res = await axios.get<PostData[]>(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
+      const res = await axios.get<PostData[]>('https://jsonplaceholder.typicode.com/posts');
       console.log(res);
       setPosts(res.data);
       setLoading(false);
@@ -38,17 +35,18 @@ const App = () => {
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   // Change page
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  // const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <>
-      <div className="container mt-5">
-        <h1 className="text-primary mb-3">My Blog</h1>
+      <div className='container mt-5'>
+        <h1 className='text-primary mb-3'>My Blog</h1>
         <Posts posts={currentPosts} loading={loading} />
         <Pagination
           postsPerPage={postsPerPage}
           totalPosts={posts.length}
-          paginate={paginate}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
         />
       </div>
     </>
